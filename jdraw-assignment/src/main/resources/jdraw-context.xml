@@ -8,7 +8,7 @@
 		<constructor-arg><ref bean="drawModel"/></constructor-arg>
 	</bean>
 
-	<bean id="drawContext" class="jdraw.std.StdContext" singleton="false"
+	<bean id="drawContext" class="jdraw.ldmitry.StdContext" singleton="false"
 		init-method="initGUI"
 	>
 		<constructor-arg ref="drawView"/>
