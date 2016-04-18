@@ -11,6 +11,7 @@ import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
+import jdraw.std.EmptyDrawCommandHandler;
 
 /**
  * Provide a standard behavior for the drawing model. This class initially does not implement the methods
@@ -20,6 +21,10 @@ import jdraw.framework.Figure;
  *
  */
 public class MyDrawModel implements DrawModel {
+	
+	private LinkedList<Figure> figures = new LinkedList<Figure>();
+	
+	private LinkedList<DrawModelListener> listeners = new LinkedList<DrawModelListener>();
 
 	@Override
 	public void addFigure(Figure f) {
@@ -42,6 +47,7 @@ public class MyDrawModel implements DrawModel {
 
 	@Override
 	public void addModelChangeListener(DrawModelListener listener) {
+		listeners.add(listener);
 		// TODO to be implemented  
 		System.out.println("StdDrawModel.addModelChangeListener has to be implemented");
 	}
