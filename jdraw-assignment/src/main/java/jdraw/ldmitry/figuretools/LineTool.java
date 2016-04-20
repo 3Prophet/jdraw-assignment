@@ -88,7 +88,7 @@ public class LineTool implements DrawTool {
 			throw new IllegalStateException();
 		}
 		anchor = new Point(x, y);
-		newLine = new Line((float) x, (float) y, (float) 0.0, (float) 0.0);
+		newLine = new Line((float) x, (float) y, (float) x, (float) y);
 		view.getModel().addFigure(newLine);
 		
 	}
