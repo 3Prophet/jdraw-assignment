@@ -70,18 +70,7 @@ public class Line implements Figure {
 		double y1 = origin.getY();
 		double x2 = corner.getX();
 		double y2 = corner.getY();
-		
-        if (x2 < x1) {
-            double t = x1;
-            x1 = x2;
-            x2 = t;
-        }
-        if (y2 < y1) {
-            double t = y1;
-            y1 = y2;
-            y2 = t;
-        }
-        line.setLine(x1, y1, x2, y2);
+        line.setLine(x1, y1, x2, y2);  
 		notifyFigureListeners();
 	}
 	/**
