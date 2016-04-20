@@ -61,7 +61,18 @@ public class Line implements Figure {
 
 	@Override
 	public boolean contains(int x, int y) {
-		return false;
+		double x1 = line.getX1();
+		double y1 = line.getY1();
+		double x2 = line.getX2();
+		double y2 = line.getY2();
+		//if C lies between A and B: ||AB| - |AC| - |BC|| <= |tolerance limit|
+		double aB = Math.pow(Math.pow(x2-x1, 2.0)  + Math.pow(y2-y1, 2.0), 0.5);
+		double bC = Math.pow(Math.pow(x2- (double) x, 2.0) + 
+					Math.pow(y2 - (double) y, 2.0), 0.5);
+		double aC = Math.pow(Math.pow(x1 - (double) x, 2.0) +
+					Math.pow(y1 - (double) y, 2.0), 0.5);	
+		double diffSquare = Math.abs(aB - bC - aC);
+		return diffSquare <= 2;
 	}
 
 	@Override
