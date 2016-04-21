@@ -99,8 +99,10 @@ public class MyDrawModel implements DrawModel, FigureListener {
 
 	@Override
 	public void setFigureIndex(Figure f, int index) {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.setFigureIndex has to be implemented");
+		figures.remove(f);
+		notifyListeners(f, DrawModelEvent.Type.FIGURE_REMOVED);
+		figures.add(index, f);
+		notifyListeners(f, DrawModelEvent.Type.FIGURE_ADDED);
 	}
 	
 	/**
