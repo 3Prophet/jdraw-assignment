@@ -24,8 +24,6 @@ public abstract class AbstractFigure implements Figure {
 
 	@Override
 	public abstract boolean contains(int x, int y);
-	
-	public abstract void drawItem(Graphics g);
 
 	@Override
 	public abstract void setBounds(Point origin, Point corner);
