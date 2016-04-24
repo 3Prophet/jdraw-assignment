@@ -151,10 +151,22 @@ public abstract class AbstractFigureTool implements DrawTool {
 	public Icon getIcon() {
 		return new ImageIcon(getClass().getResource(IMAGES + figName.toLowerCase() +".png"));
 	}
-
+	
+	/**
+	 * Returns figure name that the corresponding FigureTool creates.
+	 * @return figure name
+	 */
 	@Override
 	public String getName() {
 		return figName;
+	}
+	
+	/**
+	 * Returns anchor, which can be accessed by subclasses.
+	 * @return anchor
+	 */
+	protected Point getAnchor() {
+		return anchor;
 	}
 	
 	public void setName(String figName) {
@@ -166,4 +178,5 @@ public abstract class AbstractFigureTool implements DrawTool {
 	 * @return New Figure instance
 	 */
 	public abstract Figure getNewFigure();
+	
 }
