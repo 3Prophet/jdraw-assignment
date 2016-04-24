@@ -7,15 +7,10 @@ package jdraw.ldmitry.figures;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.LinkedList;
 import java.util.List;
 
 import jdraw.framework.Figure;
-import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
-import jdraw.framework.FigureListener;
 
 /**
  * Represents rectangles in JDraw.
@@ -23,13 +18,7 @@ import jdraw.framework.FigureListener;
  * @author Christoph Denzler
  *
  */
-public class Rect implements Figure {
-	/**
-	 * Use the java.awt.Rectangle in order to save/reuse code.
-	 */
-	private java.awt.Rectangle rectangle;
-	
-	private LinkedList<FigureListener> listeners = new LinkedList<FigureListener>();
+public class Rect extends AbstractAreaFigure {
 	
 	/**
 	 * Create a new rectangle of the given dimension.
@@ -39,14 +28,16 @@ public class Rect implements Figure {
 	 * @param h the rectangle's height
 	 */
 	public Rect(int x, int y, int w, int h) {
-		rectangle = new java.awt.Rectangle(x, y, w, h);
+		shape = new java.awt.Rectangle(x, y, w, h);
 	}
 
 	/**
 	 * Draw the rectangle to the given graphics context.
 	 * @param g the graphics context to use for drawing.
 	 */
+	@Override
 	public void draw(Graphics g) {
+		java.awt.Rectangle rectangle = (java.awt.Rectangle) shape;
 		g.setColor(Color.WHITE);
 		g.fillRect(rectangle.x, rectangle.y, 
 							 rectangle.width, rectangle.height);
@@ -54,27 +45,12 @@ public class Rect implements Figure {
 		g.drawRect(rectangle.x, rectangle.y, 
 							 rectangle.width, rectangle.height);
 	}
-	
-	@Override
-	public void setBounds(Point origin, Point corner) {
-		rectangle.setFrameFromDiagonal(origin, corner);
-		notifyFigureListeners();
-	}
 
 	@Override
 	public void move(int dx, int dy) {
-		rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
+		((java.awt.Rectangle) shape).setLocation((int) shape.getX() + dx,
+				(int) shape.getY() + dy);
 		notifyFigureListeners();
-	}
-
-	@Override
-	public boolean contains(int x, int y) {
-		return rectangle.contains(x, y);
-	}
-
-	@Override
-	public Rectangle getBounds() {
-		return rectangle.getBounds();
 	}
 
 	/**
@@ -85,26 +61,19 @@ public class Rect implements Figure {
 	public List<FigureHandle> getHandles() {
 		return null;
 	}
-
-	@Override
-	public void addFigureListener(FigureListener listener) {
-		listeners.add(listener);
-	}
-
-	@Override
-	public void removeFigureListener(FigureListener listener) {
-		listeners.remove(listener);
-	}
-
+	
 	@Override
 	public Figure clone() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public void notifyFigureListeners() {
-		for (FigureListener fl: listeners) {
-			fl.figureChanged(new FigureEvent(this));
-		}
+	/**
+	 * Factory method
+	 * @return new instance of Rect
+	 */
+	public static Figure getFigure(int x, int y, int w, int h) {
+		Rect r = new Rect(x, y, w, h); 
+		return r;
 	}
-
 }
