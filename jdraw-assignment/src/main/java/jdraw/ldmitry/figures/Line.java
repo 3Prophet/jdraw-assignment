@@ -19,13 +19,12 @@ import jdraw.framework.FigureListener;
  *
  */
 
-public class Line implements Figure {
+public class Line extends AbstractFigure {
 	/**
 	 * Use java.awt.geom.Line2D to save/reuse code.
 	 */
 	private java.awt.geom.Line2D.Float line;
 	
-	private LinkedList<FigureListener> listeners = new LinkedList<FigureListener>();
 	/**
 	 * Create a new line of the given dimension.
 	 * @param x1 the X-coordinate of the start point
@@ -98,30 +97,13 @@ public class Line implements Figure {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override
-	public void addFigureListener(FigureListener listener) {
-		if (listener != null) {
-			listeners.add(listener);
-		}
-	}
-	
-	@Override
-	public void removeFigureListener(FigureListener listener) {
-		if (listeners.contains(listener)) {
-			listeners.remove(listener);
-		}
-	}
 
 	@Override
 	public Figure clone() {
 		return null;
 	}
 	
-	public void notifyFigureListeners() {
-		// TODO Here is a code duplication for different figures. Implement Observable interface.
-		for (FigureListener fl: listeners) {
-			fl.figureChanged(new FigureEvent(this));
-		}
+	public static Figure getFigure(float x1, float y1, float x2, float y2) {
+		return new Line(x1, y1, x2, y2);
 	}
 }
