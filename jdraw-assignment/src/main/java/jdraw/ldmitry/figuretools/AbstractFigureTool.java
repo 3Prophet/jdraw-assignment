@@ -169,12 +169,16 @@ public abstract class AbstractFigureTool implements DrawTool {
 		return anchor;
 	}
 	
+	/**
+	 * Sets name of the Figure the FigureTool will be creating
+	 * @param figName
+	 */
 	public void setName(String figName) {
 		this.figName = figName;
 	}
 
 	/**
-	 * This is the factory methods for creating new figures
+	 * Returns new Figure instance when the mouse down.
 	 * @return New Figure instance
 	 */
 	public abstract Figure getNewFigure();
