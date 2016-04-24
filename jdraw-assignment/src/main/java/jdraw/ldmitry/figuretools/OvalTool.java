@@ -1,15 +1,7 @@
 package jdraw.ldmitry.figuretools;
 
-import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import jdraw.framework.DrawContext;
 import jdraw.framework.DrawTool;
-import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.ldmitry.figures.Oval;
 
