@@ -3,7 +3,7 @@ package jdraw.ldmitry.figuretools;
 import jdraw.framework.DrawContext;
 import jdraw.framework.DrawTool;
 import jdraw.framework.Figure;
-import jdraw.ldmitry.figures.Oval;
+import jdraw.ldmitry.figures.Line;
 
 public class LineTool extends AbstractFigureTool {
 	
@@ -14,7 +14,7 @@ public class LineTool extends AbstractFigureTool {
 
 	@Override
 	public Figure getNewFigure() {
-		return new Oval((float) getAnchor().getX(), (float) getAnchor().getY(), 
+		return new Line((float) getAnchor().getX(), (float) getAnchor().getY(), 
 				(float) getAnchor().getX(), (float) getAnchor().getY());
 	}
 	/**
