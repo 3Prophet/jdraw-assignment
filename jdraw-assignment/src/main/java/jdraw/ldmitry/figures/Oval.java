@@ -2,10 +2,20 @@ package jdraw.ldmitry.figures;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
 import java.util.List;
 
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
+import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.NEHandle;
+import jdraw.ldmitry.handles.NHandle;
+import jdraw.ldmitry.handles.NWHandle;
+import jdraw.ldmitry.handles.SEHandle;
+import jdraw.ldmitry.handles.SHandle;
+import jdraw.ldmitry.handles.SWHandle;
+import jdraw.ldmitry.handles.WHandle;
 
 /**
  * Represents ovals in JDraw.
@@ -44,8 +54,28 @@ public class Oval extends AbstractAreaFigure {
 
 	@Override
 	public List<FigureHandle> getHandles() {
-		// TODO Auto-generated method stub
-		return null;
+		java.awt.geom.Ellipse2D.Float oval = (java.awt.geom.Ellipse2D.Float) shape;
+		double x = oval.x;
+		double y = oval.y;
+		double w = oval.width;
+		double h = oval.height;
+		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
+		NHandle nHandle = new NHandle(this, new Point((int) (x + (w/2)), (int) y));
+		SHandle sHandle = new SHandle(this, new Point((int) (x + (w/2)), (int) (y + h)));
+		EHandle eHandle = new EHandle(this, new Point((int) (x + w), (int) (y + (h/2))));		
+		WHandle wHandle = new WHandle(this, new Point((int) x, (int) (y + (h/2))));
+		
+		handleList.add(nHandle);
+		handleList.add(sHandle);
+		handleList.add(eHandle);
+		handleList.add(wHandle);
+		
+		addFigureListener(nHandle);
+		addFigureListener(sHandle);
+		addFigureListener(eHandle);
+		addFigureListener(wHandle);
+		
+		return handleList;
 	}
 
 	@Override

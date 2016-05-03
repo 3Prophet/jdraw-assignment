@@ -11,6 +11,14 @@ import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
+import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.NEHandle;
+import jdraw.ldmitry.handles.NHandle;
+import jdraw.ldmitry.handles.NWHandle;
+import jdraw.ldmitry.handles.SEHandle;
+import jdraw.ldmitry.handles.SHandle;
+import jdraw.ldmitry.handles.SWHandle;
+import jdraw.ldmitry.handles.WHandle;
 
 /**
  * Represents lines in JDraw.
@@ -94,8 +102,57 @@ public class Line extends AbstractFigure {
 
 	@Override
 	public List<FigureHandle> getHandles() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
+	
+		double x1 = line.getX1();
+		double y1 = line.getY1();
+		double x2 = line.getX2();
+		double y2 = line.getY2();
+		
+		Point p1 = new Point((int) x1, (int) y1);
+		Point p2 = new Point((int) x2, (int) y2);
+		
+		FigureListener fh1;
+		FigureListener fh2;
+		
+		if (x1 < x2) {
+			if (y1 < y2) {
+				fh1 = new NWHandle(this, p1);
+				fh2 = new SEHandle(this, p2);
+			} else if (y1 > y2) {
+				fh1 = new SWHandle(this, p1);
+				fh2 = new NEHandle(this, p2);
+			} else {
+				fh1 = new WHandle(this, p1);
+				fh2 = new EHandle(this, p2);
+			}
+		} else if (x1 > x2) {
+			if (y1 < y2) {
+				fh1 = new NEHandle(this, p1);
+				fh2 = new SWHandle(this, p2);
+			} else if (y1 < y2) {
+				fh1 = new SEHandle(this, p1); 
+				fh2 = new NWHandle(this, p2);
+			} else {
+				fh1 = new EHandle(this, p1);
+				fh2 = new WHandle(this, p2);
+			}
+		} else {
+			if (y1 < y2) {
+				fh1 = new NHandle(this, p1);
+				fh2 = new SHandle(this, p2);
+			} else {
+				fh1  = new SHandle(this, p1);
+				fh2 = new NHandle(this, p2);
+			}
+		}
+		addFigureListener(fh1);
+		addFigureListener(fh2);
+		handleList.add((FigureHandle) fh1);
+		handleList.add((FigureHandle) fh2);
+		
+		return handleList;
 	}
 
 	@Override

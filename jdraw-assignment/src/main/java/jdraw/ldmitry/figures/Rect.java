@@ -7,10 +7,20 @@ package jdraw.ldmitry.figures;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
 import java.util.List;
 
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
+import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.NEHandle;
+import jdraw.ldmitry.handles.NHandle;
+import jdraw.ldmitry.handles.NWHandle;
+import jdraw.ldmitry.handles.SEHandle;
+import jdraw.ldmitry.handles.SHandle;
+import jdraw.ldmitry.handles.SWHandle;
+import jdraw.ldmitry.handles.WHandle;
 
 /**
  * Represents rectangles in JDraw.
@@ -59,7 +69,40 @@ public class Rect extends AbstractAreaFigure {
 	 * @see jdraw.framework.Figure#getHandles()
 	 */	
 	public List<FigureHandle> getHandles() {
-		return null;
+		java.awt.Rectangle rec = (java.awt.Rectangle) shape;
+		double x = rec.x;
+		double y = rec.y;
+		double w = rec.width;
+		double h = rec.height;
+		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
+		NHandle nHandle = new NHandle(this, new Point((int) (x + (w/2)), (int) y));
+		SHandle sHandle = new SHandle(this, new Point((int) (x + (w/2)), (int) (y + h)));
+		EHandle eHandle = new EHandle(this, new Point((int) (x + w), (int) (y + (h/2))));		
+		WHandle wHandle = new WHandle(this, new Point((int) x, (int) (y + (h/2))));
+		NWHandle nwHandle = new NWHandle(this, new Point((int) x, (int) y));
+		NEHandle neHandle = new NEHandle(this, new Point((int) (x + w), (int) y));
+		SWHandle swHandle = new SWHandle(this, new Point((int) x, (int) (y + h) ));
+		SEHandle seHandle = new SEHandle(this, new Point((int) (x + w), (int) (y + h)));
+		
+		handleList.add(nHandle);
+		handleList.add(sHandle);
+		handleList.add(eHandle);
+		handleList.add(wHandle);
+		handleList.add(nwHandle);
+		handleList.add(neHandle);
+		handleList.add(swHandle);
+		handleList.add(seHandle);
+		
+		addFigureListener(nHandle);
+		addFigureListener(sHandle);
+		addFigureListener(eHandle);
+		addFigureListener(wHandle);
+		addFigureListener(nwHandle);
+		addFigureListener(neHandle);
+		addFigureListener(swHandle);
+		addFigureListener(seHandle);
+		
+		return handleList;
 	}
 	
 	@Override
