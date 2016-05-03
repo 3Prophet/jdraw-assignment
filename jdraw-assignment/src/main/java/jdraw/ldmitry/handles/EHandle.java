@@ -8,7 +8,7 @@ import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 
-public class EHandle extends Handle {
+public class EHandle extends AbstractHandle {
 
 	public EHandle(Figure owner, Point location) {
 		super(owner, location);

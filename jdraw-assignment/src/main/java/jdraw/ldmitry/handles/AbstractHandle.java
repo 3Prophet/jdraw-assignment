@@ -12,7 +12,7 @@ import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
 
-public abstract class Handle implements FigureListener, FigureHandle {
+public abstract class AbstractHandle implements FigureListener, FigureHandle {
 	
 	/**
 	 * Instance of figure that owns a particular handle.
@@ -38,7 +38,7 @@ public abstract class Handle implements FigureListener, FigureHandle {
 	 * @param owner specifies owner of the handle
 	 * @param location specifies location of the handle
 	 */
-	public Handle(Figure owner, Point location) {
+	public AbstractHandle(Figure owner, Point location) {
 		this.owner = owner;
 		this.location = location;
 		double x = location.getX();

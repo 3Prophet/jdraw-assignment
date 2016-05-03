@@ -8,7 +8,7 @@ import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 
-public class NEHandle extends Handle {
+public class NEHandle extends AbstractHandle {
 
 	public NEHandle(Figure owner, Point location) {
 		super(owner, location);
