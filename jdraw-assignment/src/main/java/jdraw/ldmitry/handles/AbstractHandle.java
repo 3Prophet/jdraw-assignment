@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import jdraw.framework.DrawView;
@@ -13,44 +14,25 @@ import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
 
 public abstract class AbstractHandle implements FigureListener, FigureHandle {
+	/**
+	 * Handle size in pixels.
+	 */
+	protected static final int HANDLE_SIZE = 5;
 	
 	/**
-	 * Instance of figure that owns a particular handle.
+	 * Instance of figure (can't be changed) that owns a particular handle.
 	 */
-	protected Figure owner;
-	
-	/**
-	 * Location of the central point of the current handle.
-	 */
-	protected Point location;
-	
+	private final Figure owner;
 	
 	protected Point anchor;
-	
-	/**
-	 * Handle is implemented using java.awt.Rectnagle class
-	 */
-	
-	protected java.awt.Rectangle rectangle;
 	
 	/**
 	 * Constructor method of the Handle.
 	 * @param owner specifies owner of the handle
 	 * @param location specifies location of the handle
 	 */
-	public AbstractHandle(Figure owner, Point location) {
+	public AbstractHandle(Figure owner) {
 		this.owner = owner;
-		this.location = location;
-		double x = location.getX();
-		double y = location.getY();
-		// handle size in pixels
-		int w = 5;
-		int h = 5;
-		// location of the origin of the handle's rectangle
-		int newX = (int) x - (w/2);
-		int newY = (int) y - (h/2);
-		// handle delegate
-		rectangle = new java.awt.Rectangle(newX, newY, w, h);
 	}
 	
 	/**
@@ -64,20 +46,30 @@ public abstract class AbstractHandle implements FigureListener, FigureHandle {
 	}
 	
 	/**
-	 * Returns location of the particular handler.
-	 * @return Point instance, which designates handler's location
+	 * Returns location of the particular handle.
 	 */
-	@Override
-	public Point getLocation() {
-		return location;
+	public abstract Point getLocation();
+	
+	/**
+	 * Returns Handle's rectangle.
+	 */
+	protected Rectangle getRectangle() {
+		Point origin = getLocation();
+		int x = origin.x - (HANDLE_SIZE/2);
+		int y = origin.y - (HANDLE_SIZE/2);
+		Rectangle rectangle = new Rectangle(x, y, 
+													HANDLE_SIZE, HANDLE_SIZE);
+		return rectangle;
 	}
 	
 	/**
-	 * Makes handler to draw itself.
+	 * Drawing the handle.
 	 * @param g where the handler will draw itself
 	 */
 	@Override
 	public void draw(Graphics g) {
+		
+		Rectangle rectangle = getRectangle();
 		g.setColor(Color.WHITE);
 		g.fillRect(rectangle.x, rectangle.y, 
 							 rectangle.width, rectangle.height);
@@ -95,7 +87,7 @@ public abstract class AbstractHandle implements FigureListener, FigureHandle {
 
 	@Override
 	public boolean contains(int x, int y) {
-		return rectangle.contains(x, y);
+		return getRectangle().contains(x, y);
 	}
 
 	@Override

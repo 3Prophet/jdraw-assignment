@@ -2,6 +2,7 @@ package jdraw.ldmitry.handles;
 
 import java.awt.Cursor;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import jdraw.framework.DrawView;
@@ -10,9 +11,8 @@ import jdraw.framework.FigureEvent;
 
 public class WHandle extends AbstractHandle {
 
-	public WHandle(Figure owner, Point location) {
-		super(owner, location);
-		// TODO Auto-generated constructor stub
+	public WHandle(Figure owner) {
+		super(owner);
 	}
 
 	@Override
@@ -22,27 +22,20 @@ public class WHandle extends AbstractHandle {
 	
 	@Override
 	public void dragInteraction(int x, int y, MouseEvent e, DrawView v) {
-		java.awt.Rectangle bounds = owner.getBounds();
-		int oldX = bounds.x;
-		int newX = oldX - (anchor.x - x);
-		int newY = bounds.y;
-		int newWidth = bounds.width + (oldX - newX);
-		owner.setBounds(new Point(newX, newY), 
-				new Point(newX + newWidth, newY + bounds.height));	
+		Rectangle r = getOwner().getBounds();
+		
+		getOwner().setBounds(new Point(x, r.y), 
+				new Point(r.x + r.width, r.y + r.height));
 	}
 	
 	public  void figureChanged(FigureEvent e) {
-		java.awt.Rectangle bounds = e.getFigure().getBounds();
-		int newXOwner = bounds.x;
-		int newYOwner = bounds.y;
-		int newWidth = bounds.width;
-		int newHeight = bounds.height;
-		int newXHandle = newXOwner;
-		int newYHandle = newYOwner + (int) (newHeight/2);
-		int delXHandle = newXHandle - location.x;
-		int delYHandle = newYHandle - location.y;
-		location = new Point(newXHandle, newYHandle);
-		rectangle = new java.awt.Rectangle(rectangle.x + delXHandle, rectangle.y + delYHandle,
-				rectangle.width, rectangle.height);
+	}
+
+	@Override
+	public Point getLocation() {
+		Rectangle r = getOwner().getBounds();
+		int x = r.x;
+		int y = r.y + (r.height/2);
+		return new Point(x, y);
 	}
 }

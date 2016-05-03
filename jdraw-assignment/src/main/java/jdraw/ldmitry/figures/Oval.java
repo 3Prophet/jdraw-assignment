@@ -54,16 +54,12 @@ public class Oval extends AbstractAreaFigure {
 
 	@Override
 	public List<FigureHandle> getHandles() {
-		java.awt.geom.Ellipse2D.Float oval = (java.awt.geom.Ellipse2D.Float) shape;
-		double x = oval.x;
-		double y = oval.y;
-		double w = oval.width;
-		double h = oval.height;
+
 		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
-		NHandle nHandle = new NHandle(this, new Point((int) (x + (w/2)), (int) y));
-		SHandle sHandle = new SHandle(this, new Point((int) (x + (w/2)), (int) (y + h)));
-		EHandle eHandle = new EHandle(this, new Point((int) (x + w), (int) (y + (h/2))));		
-		WHandle wHandle = new WHandle(this, new Point((int) x, (int) (y + (h/2))));
+		NHandle nHandle = new NHandle(this);
+		SHandle sHandle = new SHandle(this);
+		EHandle eHandle = new EHandle(this);		
+		WHandle wHandle = new WHandle(this);
 		
 		handleList.add(nHandle);
 		handleList.add(sHandle);

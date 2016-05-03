@@ -118,33 +118,33 @@ public class Line extends AbstractFigure {
 		
 		if (x1 < x2) {
 			if (y1 < y2) {
-				fh1 = new NWHandle(this, p1);
-				fh2 = new SEHandle(this, p2);
+				fh1 = new NWHandle(this);
+				fh2 = new SEHandle(this);
 			} else if (y1 > y2) {
-				fh1 = new SWHandle(this, p1);
-				fh2 = new NEHandle(this, p2);
+				fh1 = new SWHandle(this);
+				fh2 = new NEHandle(this);
 			} else {
-				fh1 = new WHandle(this, p1);
-				fh2 = new EHandle(this, p2);
+				fh1 = new WHandle(this);
+				fh2 = new EHandle(this);
 			}
 		} else if (x1 > x2) {
 			if (y1 < y2) {
-				fh1 = new NEHandle(this, p1);
-				fh2 = new SWHandle(this, p2);
+				fh1 = new NEHandle(this);
+				fh2 = new SWHandle(this);
 			} else if (y1 < y2) {
-				fh1 = new SEHandle(this, p1); 
-				fh2 = new NWHandle(this, p2);
+				fh1 = new SEHandle(this); 
+				fh2 = new NWHandle(this);
 			} else {
-				fh1 = new EHandle(this, p1);
-				fh2 = new WHandle(this, p2);
+				fh1 = new EHandle(this);
+				fh2 = new WHandle(this);
 			}
 		} else {
 			if (y1 < y2) {
-				fh1 = new NHandle(this, p1);
-				fh2 = new SHandle(this, p2);
+				fh1 = new NHandle(this);
+				fh2 = new SHandle(this);
 			} else {
-				fh1  = new SHandle(this, p1);
-				fh2 = new NHandle(this, p2);
+				fh1  = new SHandle(this);
+				fh2 = new NHandle(this);
 			}
 		}
 		addFigureListener(fh1);

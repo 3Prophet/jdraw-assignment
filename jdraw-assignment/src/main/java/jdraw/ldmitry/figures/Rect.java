@@ -25,7 +25,7 @@ import jdraw.ldmitry.handles.WHandle;
 /**
  * Represents rectangles in JDraw.
  * 
- * @author Christoph Denzler
+ * @author Christoph Denzler, Dmitry Logvinovich
  *
  */
 public class Rect extends AbstractAreaFigure {
@@ -69,20 +69,16 @@ public class Rect extends AbstractAreaFigure {
 	 * @see jdraw.framework.Figure#getHandles()
 	 */	
 	public List<FigureHandle> getHandles() {
-		java.awt.Rectangle rec = (java.awt.Rectangle) shape;
-		double x = rec.x;
-		double y = rec.y;
-		double w = rec.width;
-		double h = rec.height;
+
 		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
-		NHandle nHandle = new NHandle(this, new Point((int) (x + (w/2)), (int) y));
-		SHandle sHandle = new SHandle(this, new Point((int) (x + (w/2)), (int) (y + h)));
-		EHandle eHandle = new EHandle(this, new Point((int) (x + w), (int) (y + (h/2))));		
-		WHandle wHandle = new WHandle(this, new Point((int) x, (int) (y + (h/2))));
-		NWHandle nwHandle = new NWHandle(this, new Point((int) x, (int) y));
-		NEHandle neHandle = new NEHandle(this, new Point((int) (x + w), (int) y));
-		SWHandle swHandle = new SWHandle(this, new Point((int) x, (int) (y + h) ));
-		SEHandle seHandle = new SEHandle(this, new Point((int) (x + w), (int) (y + h)));
+		NHandle nHandle = new NHandle(this);
+		SHandle sHandle = new SHandle(this);
+		EHandle eHandle = new EHandle(this);		
+		WHandle wHandle = new WHandle(this);
+		NWHandle nwHandle = new NWHandle(this);
+		NEHandle neHandle = new NEHandle(this);
+		SWHandle swHandle = new SWHandle(this);
+		SEHandle seHandle = new SEHandle(this);
 		
 		handleList.add(nHandle);
 		handleList.add(sHandle);
