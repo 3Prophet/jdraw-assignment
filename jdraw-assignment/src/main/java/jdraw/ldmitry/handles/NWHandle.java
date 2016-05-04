@@ -8,8 +8,10 @@ import java.awt.event.MouseEvent;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
+import jdraw.ldmitry.figures.AbstractFigure;
 
-public class NWHandle extends AbstractHandle {
+
+public class NWHandle extends AbstractHandleState {
 
 	public NWHandle(Figure owner) {
 		super(owner);
@@ -26,7 +28,14 @@ public class NWHandle extends AbstractHandle {
 		Rectangle r = getOwner().getBounds();
 		
 		getOwner().setBounds(new Point(x, y), 
-				new Point(r.x + r.width, r.y + r.height) );
+				new Point(r.x + r.width, r.y + r.height));
+		
+		if (x > r.x + r.width) {
+			 ((AbstractFigure) getOwner()).swapHorizontal();
+		} else if (y > r.y + r.height) {
+			 ((AbstractFigure) getOwner()).swapVertical();
+		}
+		
 		
 	}
 	@Override

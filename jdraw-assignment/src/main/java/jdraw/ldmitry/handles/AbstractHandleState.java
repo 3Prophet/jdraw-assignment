@@ -13,7 +13,8 @@ import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
 
-public abstract class AbstractHandle implements FigureListener, FigureHandle {
+
+public abstract class AbstractHandleState implements FigureListener, FigureHandle {
 	/**
 	 * Handle size in pixels.
 	 */
@@ -22,16 +23,14 @@ public abstract class AbstractHandle implements FigureListener, FigureHandle {
 	/**
 	 * Instance of figure (can't be changed) that owns a particular handle.
 	 */
-	private final Figure owner;
-	
-	protected Point anchor;
+	protected final Figure owner;
 	
 	/**
 	 * Constructor method of the Handle.
-	 * @param owner specifies owner of the handle
+	 * @param owner2 specifies owner of the handle
 	 * @param location specifies location of the handle
 	 */
-	public AbstractHandle(Figure owner) {
+	public AbstractHandleState(Figure owner) {
 		this.owner = owner;
 	}
 	
@@ -92,18 +91,13 @@ public abstract class AbstractHandle implements FigureListener, FigureHandle {
 
 	@Override
 	public void startInteraction(int x, int y, MouseEvent e, DrawView v) {
-		if (anchor != null) {
-			throw new IllegalStateException();
-		}
-		anchor = new Point(x, y);
 	}
 
 	@Override
 	public abstract void dragInteraction(int x, int y, MouseEvent e, DrawView v);
 
 	@Override
-	public void stopInteraction(int x, int y, MouseEvent e, DrawView v) {
-		anchor = null;		
+	public void stopInteraction(int x, int y, MouseEvent e, DrawView v) {	
 	}
 	
 	@Override

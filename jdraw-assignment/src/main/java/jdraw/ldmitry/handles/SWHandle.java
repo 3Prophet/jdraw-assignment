@@ -8,8 +8,9 @@ import java.awt.event.MouseEvent;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
+import jdraw.ldmitry.figures.AbstractFigure;
 
-public class SWHandle extends AbstractHandle {
+public class SWHandle extends AbstractHandleState {
 
 	public SWHandle(Figure owner) {
 		super(owner);
@@ -25,6 +26,12 @@ public class SWHandle extends AbstractHandle {
 		
 		getOwner().setBounds(new Point(x, r.y), 
 				new Point(r.x + r.width, y));
+		
+		if (x > r.x + r.width) {
+			 ((AbstractFigure) getOwner()).swapHorizontal();
+		} else if (y < r.y) {
+			 ((AbstractFigure) getOwner()).swapVertical();
+		}
 	}
 	@Override
 	public  void figureChanged(FigureEvent e) {

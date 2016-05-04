@@ -11,7 +11,10 @@ import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
+import jdraw.ldmitry.figuretools.AbstractFigureTool;
+import jdraw.ldmitry.handles.AbstractHandleState;
 import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.Handle;
 import jdraw.ldmitry.handles.NEHandle;
 import jdraw.ldmitry.handles.NHandle;
 import jdraw.ldmitry.handles.NWHandle;
@@ -33,6 +36,8 @@ public class Line extends AbstractFigure {
 	 */
 	private java.awt.geom.Line2D.Float line;
 	
+	private LinkedList<FigureHandle> handleList;
+	
 	/**
 	 * Create a new line of the given dimension.
 	 * @param x1 the X-coordinate of the start point
@@ -41,7 +46,47 @@ public class Line extends AbstractFigure {
 	 * @param y2 the Y-coordinate of the end point
 	 */
 	public Line(float x1, float y1, float x2, float y2) {
+		
 		line = new java.awt.geom.Line2D.Float(x1, y1, x2, y2);
+		
+		AbstractHandleState fh1;
+		AbstractHandleState fh2;
+		
+		if (x1 < x2) {
+			if (y1 < y2) {
+				fh1 = new NWHandle(this);
+				fh2 = new SEHandle(this);
+			} else if (y1 > y2) {
+				fh1 = new SWHandle(this);
+				fh2 = new NEHandle(this);
+			} else {
+				fh1 = new WHandle(this);
+				fh2 = new EHandle(this);
+			}
+		} else if (x1 > x2) {
+			if (y1 < y2) {
+				fh1 = new NEHandle(this);
+				fh2 = new SWHandle(this);
+			} else if (y1 < y2) {
+				fh1 = new SEHandle(this); 
+				fh2 = new NWHandle(this);
+			} else {
+				fh1 = new EHandle(this);
+				fh2 = new WHandle(this);
+			}
+		} else {
+			if (y1 < y2) {
+				fh1 = new NHandle(this);
+				fh2 = new SHandle(this);
+			} else {
+				fh1  = new SHandle(this);
+				fh2 = new NHandle(this);
+			}
+		}
+
+		handleList.add(new Handle(fh1));
+		handleList.add(new Handle(fh2));
+			
 	}
 	/**
 	 * Draw the line to the given graphics context.
@@ -102,56 +147,6 @@ public class Line extends AbstractFigure {
 
 	@Override
 	public List<FigureHandle> getHandles() {
-		
-		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
-	
-		double x1 = line.getX1();
-		double y1 = line.getY1();
-		double x2 = line.getX2();
-		double y2 = line.getY2();
-		
-		Point p1 = new Point((int) x1, (int) y1);
-		Point p2 = new Point((int) x2, (int) y2);
-		
-		FigureListener fh1;
-		FigureListener fh2;
-		
-		if (x1 < x2) {
-			if (y1 < y2) {
-				fh1 = new NWHandle(this);
-				fh2 = new SEHandle(this);
-			} else if (y1 > y2) {
-				fh1 = new SWHandle(this);
-				fh2 = new NEHandle(this);
-			} else {
-				fh1 = new WHandle(this);
-				fh2 = new EHandle(this);
-			}
-		} else if (x1 > x2) {
-			if (y1 < y2) {
-				fh1 = new NEHandle(this);
-				fh2 = new SWHandle(this);
-			} else if (y1 < y2) {
-				fh1 = new SEHandle(this); 
-				fh2 = new NWHandle(this);
-			} else {
-				fh1 = new EHandle(this);
-				fh2 = new WHandle(this);
-			}
-		} else {
-			if (y1 < y2) {
-				fh1 = new NHandle(this);
-				fh2 = new SHandle(this);
-			} else {
-				fh1  = new SHandle(this);
-				fh2 = new NHandle(this);
-			}
-		}
-		addFigureListener(fh1);
-		addFigureListener(fh2);
-		handleList.add((FigureHandle) fh1);
-		handleList.add((FigureHandle) fh2);
-		
 		return handleList;
 	}
 
@@ -162,5 +157,15 @@ public class Line extends AbstractFigure {
 	
 	public static Figure getFigure(float x1, float y1, float x2, float y2) {
 		return new Line(x1, y1, x2, y2);
+	}
+	@Override
+	public void swapHorizontal() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void swapVertical() {
+		// TODO Auto-generated method stub
+		
 	}
 }

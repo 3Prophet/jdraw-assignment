@@ -33,6 +33,16 @@ public abstract class AbstractFigure implements Figure {
 
 	@Override
 	public abstract List<FigureHandle> getHandles();
+	
+	/**
+	 * Implements horizontal swapping of figure handles.
+	 */
+	public abstract void swapHorizontal();
+	
+	/**
+	 * Implements vertical swapping of figure handles.
+	 */
+	public abstract void swapVertical();
 
 	@Override
 	public void addFigureListener(FigureListener listener) {

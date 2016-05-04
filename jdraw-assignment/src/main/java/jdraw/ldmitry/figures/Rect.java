@@ -13,7 +13,9 @@ import java.util.List;
 
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
+import jdraw.ldmitry.handles.AbstractHandleState;
 import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.Handle;
 import jdraw.ldmitry.handles.NEHandle;
 import jdraw.ldmitry.handles.NHandle;
 import jdraw.ldmitry.handles.NWHandle;
@@ -30,6 +32,8 @@ import jdraw.ldmitry.handles.WHandle;
  */
 public class Rect extends AbstractAreaFigure {
 	
+	private LinkedList<FigureHandle> handleList; 
+	
 	/**
 	 * Create a new rectangle of the given dimension.
 	 * @param x the x-coordinate of the upper left corner of the rectangle
@@ -39,6 +43,17 @@ public class Rect extends AbstractAreaFigure {
 	 */
 	public Rect(int x, int y, int w, int h) {
 		shape = new java.awt.Rectangle(x, y, w, h);
+		
+		handleList = new LinkedList<FigureHandle>();
+		
+		handleList.add(new Handle(new NHandle(this)));
+		handleList.add(new Handle(new SHandle(this)));
+		handleList.add(new Handle(new WHandle(this)));
+		handleList.add(new Handle(new EHandle(this)));
+		handleList.add(new Handle(new NWHandle(this)));
+		handleList.add(new Handle(new NEHandle(this)));
+		handleList.add(new Handle(new SWHandle(this)));
+		handleList.add(new Handle(new SEHandle(this)));	
 	}
 
 	/**
@@ -69,36 +84,57 @@ public class Rect extends AbstractAreaFigure {
 	 * @see jdraw.framework.Figure#getHandles()
 	 */	
 	public List<FigureHandle> getHandles() {
-
-		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
-		NHandle nHandle = new NHandle(this);
-		SHandle sHandle = new SHandle(this);
-		EHandle eHandle = new EHandle(this);		
-		WHandle wHandle = new WHandle(this);
-		NWHandle nwHandle = new NWHandle(this);
-		NEHandle neHandle = new NEHandle(this);
-		SWHandle swHandle = new SWHandle(this);
-		SEHandle seHandle = new SEHandle(this);
-		
-		handleList.add(nHandle);
-		handleList.add(sHandle);
-		handleList.add(eHandle);
-		handleList.add(wHandle);
-		handleList.add(nwHandle);
-		handleList.add(neHandle);
-		handleList.add(swHandle);
-		handleList.add(seHandle);
-		
-		addFigureListener(nHandle);
-		addFigureListener(sHandle);
-		addFigureListener(eHandle);
-		addFigureListener(wHandle);
-		addFigureListener(nwHandle);
-		addFigureListener(neHandle);
-		addFigureListener(swHandle);
-		addFigureListener(seHandle);
-		
 		return handleList;
+	}
+	
+	public void swapHorizontal() {
+		
+		Handle wHandle = (Handle) handleList.get(2);
+		Handle eHandle = (Handle) handleList.get(3);
+		Handle nwHandle = (Handle) handleList.get(4);
+		Handle neHandle = (Handle) handleList.get(5);
+		Handle swHandle = (Handle) handleList.get(6);
+		Handle seHandle = (Handle) handleList.get(7);
+		
+		AbstractHandleState wState = wHandle.getState();
+		AbstractHandleState eState = eHandle.getState();
+		AbstractHandleState nwState = nwHandle.getState();
+		AbstractHandleState neState = neHandle.getState();
+		AbstractHandleState swState = swHandle.getState();
+		AbstractHandleState seState = seHandle.getState();
+		
+		eHandle.setState(wState);
+		wHandle.setState(eState);
+		nwHandle.setState(neState);
+		neHandle.setState(nwState);
+		swHandle.setState(seState);
+		seHandle.setState(swState);
+		
+	}
+	
+	public void swapVertical() {
+		
+		Handle nHandle = (Handle) handleList.get(0);
+		Handle sHandle = (Handle) handleList.get(1);
+		Handle nwHandle = (Handle) handleList.get(4);
+		Handle neHandle = (Handle) handleList.get(5);
+		Handle swHandle = (Handle) handleList.get(6);
+		Handle seHandle = (Handle) handleList.get(7);
+		
+		AbstractHandleState nState = nHandle.getState();
+		AbstractHandleState sState = sHandle.getState();
+		AbstractHandleState nwState = nwHandle.getState();
+		AbstractHandleState neState = neHandle.getState();
+		AbstractHandleState swState = swHandle.getState();
+		AbstractHandleState seState = seHandle.getState();
+		
+		nHandle.setState(sState);
+		sHandle.setState(nState);
+		nwHandle.setState(swState);
+		neHandle.setState(seState);
+		swHandle.setState(nwState);
+		seHandle.setState(neState);
+
 	}
 	
 	@Override

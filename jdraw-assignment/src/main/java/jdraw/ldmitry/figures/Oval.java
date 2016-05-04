@@ -8,7 +8,9 @@ import java.util.List;
 
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
+import jdraw.ldmitry.handles.AbstractHandleState;
 import jdraw.ldmitry.handles.EHandle;
+import jdraw.ldmitry.handles.Handle;
 import jdraw.ldmitry.handles.NEHandle;
 import jdraw.ldmitry.handles.NHandle;
 import jdraw.ldmitry.handles.NWHandle;
@@ -24,6 +26,8 @@ import jdraw.ldmitry.handles.WHandle;
  *
  */
 public class Oval extends AbstractAreaFigure {
+	
+	private LinkedList<FigureHandle> handleList; 
 
 	/**
 	 * Create a new oval of the given dimension.
@@ -34,7 +38,15 @@ public class Oval extends AbstractAreaFigure {
 	 */
 	public Oval(float x, float y, float w, float h) {
 		shape = new java.awt.geom.Ellipse2D.Float(x, y, w, h);
+		
+		handleList = new LinkedList<FigureHandle>();
+		
+		handleList.add(new Handle(new NHandle(this)));
+		handleList.add(new Handle(new SHandle(this)));
+		handleList.add(new Handle(new WHandle(this)));
+		handleList.add(new Handle(new EHandle(this)));
 	}
+	
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.WHITE);
@@ -54,23 +66,6 @@ public class Oval extends AbstractAreaFigure {
 
 	@Override
 	public List<FigureHandle> getHandles() {
-
-		List<FigureHandle> handleList = new LinkedList<FigureHandle>();
-		NHandle nHandle = new NHandle(this);
-		SHandle sHandle = new SHandle(this);
-		EHandle eHandle = new EHandle(this);		
-		WHandle wHandle = new WHandle(this);
-		
-		handleList.add(nHandle);
-		handleList.add(sHandle);
-		handleList.add(eHandle);
-		handleList.add(wHandle);
-		
-		addFigureListener(nHandle);
-		addFigureListener(sHandle);
-		addFigureListener(eHandle);
-		addFigureListener(wHandle);
-		
 		return handleList;
 	}
 
@@ -78,5 +73,34 @@ public class Oval extends AbstractAreaFigure {
 	public Figure clone() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void swapHorizontal() {
+
+		Handle wHandle = (Handle) handleList.get(2);
+		Handle eHandle = (Handle) handleList.get(3);
+	
+		AbstractHandleState wState = wHandle.getState();
+		AbstractHandleState eState = eHandle.getState();
+		
+		eHandle.setState(wState);
+		wHandle.setState(eState);
+	}
+
+	@Override
+	public void swapVertical() {
+		
+		Handle nHandle = (Handle) handleList.get(0);
+		Handle sHandle = (Handle) handleList.get(1);
+
+		
+		AbstractHandleState nState = nHandle.getState();
+		AbstractHandleState sState = sHandle.getState();
+		
+		nHandle.setState(sState);
+		sHandle.setState(nState);
+		
 	}
 }
